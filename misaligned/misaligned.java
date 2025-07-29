@@ -30,7 +30,7 @@ public class Misaligned {
         int count = 0;
         for(int i = 0; i < majorColors.length; i++) {
             for(int j = 0; j < minorColors.length; j++) {
-                System.out.printf("%d | %s | %s\n", count++, majorColors[i], minorColors[j]);
+                System.out.printf("%d | %s | %s\n", count++, majorColors[i], minorColors[i]);
             }
         }
         return count; // Return total count of combinations
