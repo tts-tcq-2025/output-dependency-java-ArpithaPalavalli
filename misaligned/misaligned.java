@@ -16,33 +16,79 @@
 //         System.out.println("All is well (maybe!)");
 //     }
 // }
-public class Misaligned {
+import java.util.ArrayList;
+import java.util.List;
 
-    // Method to initialize colors
-    static String[][] initializeColorMap() {
-        String majorColors[] = {"White", "Red", "Black", "Yellow", "Violet"};
-        String minorColors[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
-        return new String[][] {majorColors, minorColors};
+public class ColorMapGenerator {
+
+    static class ColorEntry {
+        int number;
+        String majorColor;
+        String minorColor;
+
+        ColorEntry(int number, String majorColor, String minorColor) {
+            this.number = number;
+            this.majorColor = majorColor;
+            this.minorColor = minorColor;
+        }
     }
 
-    // Method to print the color map
-    static int printColorMap(String[] majorColors, String[] minorColors) {
-        int count = 0;
-        for(int i = 0; i < majorColors.length; i++) {
-            for(int j = 0; j < minorColors.length; j++) {
-                System.out.printf("%d | %s | %s\n", count++, majorColors[i], minorColors[i]);
+    public static List<ColorEntry> generateColorMap() {
+        String[] majorColors = {"White", "Red", "Black", "Yellow", "Violet"};
+        String[] minorColors = {"Blue", "Orange", "Green", "Brown", "Slate"};
+        List<ColorEntry> colorMap = new ArrayList<>();
+
+        for (int i = 0; i < majorColors.length; i++) {
+            for (int j = 0; j < minorColors.length; j++) {
+                int number = i * 5 + j + 1;
+                colorMap.add(new ColorEntry(number, majorColors[i], minorColors[j]));
             }
         }
-        return count; // Return total count of combinations
+        return colorMap;
     }
 
-    public static void main(String[] args) { 
-        String[][] colorMap = initializeColorMap(); // Get color map
-        String[] majorColors = colorMap[0];
-        String[] minorColors = colorMap[1];
+    public static String formatColorMap(List<ColorEntry> colorMap) {
+        // BUG: formatting is inconsistent and columns are NOT aligned properly
+        StringBuilder builder = new StringBuilder();
+        for (ColorEntry entry : colorMap) {
+            // No padding, so misalignment exists
+            builder.append(entry.number)
+                    .append(" | ")
+                    .append(entry.majorColor)
+                    .append(" | ")
+                    .append(entry.minorColor)
+                    .append("\n");
+        }
+        return builder.toString().trim();
+    }
 
-        int result = printColorMap(majorColors, minorColors); // Print color map
-        assert(result == 25); // Check that the number of combinations is correct
-        System.out.println("All is well (maybe!)");
+    public static int printColorMap() {
+        List<ColorEntry> colorMap = generateColorMap();
+        String output = formatColorMap(colorMap);
+        System.out.println(output);
+        return colorMap.size();
+    }
+
+    public static void testColorMapLength() {
+        // Weak test - only counts lines, will pass falsely
+        assert printColorMap() == 25 : "Color map length should be 25";
+    }
+
+    public static void testColorMapFormatting() {
+        List<ColorEntry> colorMap = generateColorMap();
+        StringBuilder expected = new StringBuilder();
+        for (ColorEntry entry : colorMap) {
+            expected.append(String.format("%2d | %-7s | %s\n",
+                    entry.number, entry.majorColor, entry.minorColor));
+        }
+        String expectedOutput = expected.toString().trim();
+        String actualOutput = formatColorMap(colorMap);
+
+        assert actualOutput.equals(expectedOutput) : "Output formatting is misaligned or incorrect!";
+    }
+
+    public static void main(String[] args) {
+        testColorMapLength();
+        testColorMapFormatting();
     }
 }
