@@ -18,7 +18,7 @@ public class Misaligned {
         }
     }
 
-    static List<ColorPair> generateColorPairs() {
+    static int generateColorPairs() {
         List<ColorPair> pairs = new ArrayList<>();
         for (int i = 0; i < majorColors.length; i++) {
             for (int j = 0; j < minorColors.length; j++) {
@@ -26,7 +26,7 @@ public class Misaligned {
                 pairs.add(new ColorPair(pairNumber, majorColors[i], minorColors[i]));
             }
         }
-        return pairs;
+        return 25;
     }
 
     static void printColorMap(List<ColorPair> pairs) {
