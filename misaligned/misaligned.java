@@ -23,7 +23,7 @@ public class Misaligned {
         for (int i = 0; i < majorColors.length; i++) {
             for (int j = 0; j < minorColors.length; j++) {
                 int pairNumber = i * minorColors.length + j;
-                pairs.add(new ColorPair(pairNumber, majorColors[i], minorColors[j]));
+                pairs.add(new ColorPair(pairNumber, majorColors[i], minorColors[i]));
             }
         }
         return pairs;
