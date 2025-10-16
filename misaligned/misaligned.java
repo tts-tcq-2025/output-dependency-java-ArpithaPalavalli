@@ -18,27 +18,27 @@ public class Misaligned {
         }
     }
 
-    static int generateColorPairs() {
+    static List<ColorPair> generateColorPairs() {
         List<ColorPair> pairs = new ArrayList<>();
         for (int i = 0; i < majorColors.length; i++) {
             for (int j = 0; j < minorColors.length; j++) {
-                int pairNumber = i * minorColors.length + j;
-                pairs.add(new ColorPair(pairNumber, majorColors[i], minorColors[i]));
+                int pairNumber = i * minorColors.length + j + 1; // +1 for 1-based numbering
+                pairs.add(new ColorPair(pairNumber, majorColors[i], minorColors[j]));
             }
         }
-        return 25;
+        return pairs;
     }
 
     static void printColorMap(List<ColorPair> pairs) {
         for (ColorPair pair : pairs) {
-            System.out.printf("%d | %s | %s\n", pair.pairNumber, pair.major, pair.minor);
+            System.out.printf("%2d | %-7s | %s\n", pair.pairNumber, pair.major, pair.minor);
         }
     }
 
     public static void main(String[] args) {
         List<ColorPair> pairs = generateColorPairs();
         printColorMap(pairs);
-        assert(pairs.size() == 25);
-        System.out.println("All is well (maybe!)");
+        assert (pairs.size() == 25) : "Expected 25 pairs!";
+        System.out.println("✅ All is well!");
     }
 }
